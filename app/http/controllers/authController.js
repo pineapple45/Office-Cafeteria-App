@@ -1,6 +1,6 @@
-const User = require("../../models/user");
-const bcrypt = require("bcrypt");
-const passport = require("passport");
+const User = require('../../models/user');
+const bcrypt = require('bcrypt');
+const passport = require('passport');
 
 //global variables
 let employee_id;
@@ -11,37 +11,37 @@ let mobile_no;
 let password;
 let confirmpassword;
 let image;
-let id = "";
+let id = '';
 
 const authController = () => {
   const _getRedirectUrl = (req) => {
-    return req.user.role === "admin" ? "/admin/orders" : "/";
+    return req.user.role === 'admin' ? '/admin/orders' : '/';
     // factory functions
   };
   return {
     login: (req, res) => {
-      res.render("auth/login");
+      res.render('auth/login');
     },
     postLogin: (req, res, next) => {
       employee_id = req.body.employee_id;
       password = req.body.password;
       // Validate request
       if (!employee_id || !password) {
-        req.flash("error", "All fields are required");
-        return res.redirect("/login");
+        req.flash('error', 'All fields are required');
+        return res.redirect('/login');
       }
-      passport.authenticate("local", (err, user, info) => {
+      passport.authenticate('local', (err, user, info) => {
         if (err) {
-          req.flash("error", info.message);
+          req.flash('error', info.message);
           return next(err);
         }
         if (!user) {
-          req.flash("error", info.message);
-          return res.redirect("/login");
+          req.flash('error', info.message);
+          return res.redirect('/login');
         }
         req.logIn(user, (err) => {
           if (err) {
-            req.flash("error", info.message);
+            req.flash('error', info.message);
             return next(err);
           }
 
@@ -51,12 +51,12 @@ const authController = () => {
     },
 
     register: (req, res) => {
-      req.flash("employee_id", employee_id);
-      req.flash("name", name);
-      req.flash("email", email);
-      req.flash("organization_name", organization_name);
-      req.flash("mobile_no", mobile_no);
-      return res.render("auth/register");
+      // req.flash('employee_id', employee_id);
+      // req.flash('name', name);
+      // req.flash('email', email);
+      // req.flash('organization_name', organization_name);
+      // req.flash('mobile_no', mobile_no);
+      return res.render('auth/register');
     },
     // postRegister: (req, res) => {
     async postRegister(req, res) {
@@ -80,18 +80,18 @@ const authController = () => {
         !confirmpassword ||
         !image
       ) {
-        req.flash("error", "All fields are required");
-        return res.redirect("/register");
+        req.flash('error', 'All fields are required');
+        return res.redirect('/register');
       }
       // Check if mobile no is of 10 digits
       if (mobile_no.length != 10) {
-        req.flash("error", "Mobile number is not of 10 digits");
-        return res.redirect("/register");
+        req.flash('error', 'Mobile number is not of 10 digits');
+        return res.redirect('/register');
       }
       //Check if confirm password is same as password or not
       if (confirmpassword != password) {
-        req.flash("error", "Confirm password is not same as password");
-        return res.redirect("/register");
+        req.flash('error', 'Confirm password is not same as password');
+        return res.redirect('/register');
       }
 
       // Check if employee id or email exists
@@ -99,14 +99,11 @@ const authController = () => {
         $or: [{ employee_id: employee_id }, { email: email }],
       });
       if (user) {
-        req.flash("error", "User already exists");
-        return res.redirect("/register");
+        req.flash('error', 'User already exists');
+        return res.redirect('/register');
       }
-      return res.redirect("/preview");
-    },
 
-    preview: (req, res) => {
-      return res.render("auth/preview", {
+      return res.render('auth/preview', {
         image,
         employee_id,
         name,
@@ -115,6 +112,17 @@ const authController = () => {
         mobile_no,
       });
     },
+
+    // preview: (req, res) => {
+    //   return res.render('auth/preview', {
+    //     image,
+    //     employee_id,
+    //     name,
+    //     email,
+    //     organization_name,
+    //     mobile_no,
+    //   });
+    // },
 
     async postPreview(req, res) {
       // Hash password
@@ -135,31 +143,31 @@ const authController = () => {
         .then((user) => {
           // Login
           id = user.id;
-          employee_id = "";
-          name = "";
-          email = "";
-          organization_name = "";
-          mobile_no = "";
-          password = "";
-          confirmpassword = "";
-          image = "";
-          return res.redirect("/success");
+          employee_id = '';
+          name = '';
+          email = '';
+          organization_name = '';
+          mobile_no = '';
+          password = '';
+          confirmpassword = '';
+          image = '';
+          return res.redirect('/success');
         })
         .catch((err) => {
-          req.flash("error", "Something went wrong");
-          return res.redirect("/preview");
+          req.flash('error', 'Something went wrong');
+          return res.redirect('/preview');
         });
     },
 
     success: (req, res) => {
-      return res.render("auth/success", { id });
+      return res.render('auth/success', { id });
     },
 
     logout(req, res) {
-      employee_id = "";
-      password = "";
+      employee_id = '';
+      password = '';
       req.logout();
-      return res.redirect("/login");
+      return res.redirect('/login');
     },
   };
 };
