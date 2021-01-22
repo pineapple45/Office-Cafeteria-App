@@ -13,8 +13,7 @@ const passport = require("passport");
 const Emitter = require("events");
 
 // Database connection
-const url = "mongodb://localhost/food";
-mongoose.connect(url, {
+mongoose.connect(process.env.MONGO_CONNECTION_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
@@ -101,3 +100,5 @@ eventEmitter.on("orderUpdated", (data) => {
 eventEmitter.on("orderPlaced", (data) => {
   io.to("adminRoom").emit("orderPlaced", data);
 });
+
+

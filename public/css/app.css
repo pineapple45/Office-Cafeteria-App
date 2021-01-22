@@ -430,6 +430,8 @@ section.cart .amount {
 section.login {
   align-items: center;
   min-height: calc(100vh);
+  width: 94vw;
+  margin: auto;
 }
 section.login a {
   color: #fe5f1e;
@@ -870,6 +872,23 @@ a.link {
          column-gap: 7rem;
   }
 }
+@media (max-width: 1022px) and (max-width: 1560px) {
+  .container {
+    max-width: 90%;
+  }
+
+  table {
+    color: #1d2521;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 768px) {
+  .status-box ul li span:before {
+    font-size: 34px;
+  }
+}
 section.status {
   background: #f8f8f8;
   min-height: calc(100vh - 86px);
@@ -974,5 +993,29 @@ section.status {
 .status-box ul li small {
   float: right;
   font-size: 14px;
-  margin-top: 8px;
+}
+
+.StripeElement {
+  box-sizing: border-box;
+  width: 50%;
+  margin-left: auto;
+  height: 40px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
 }
