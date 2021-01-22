@@ -29,7 +29,7 @@ const initRoutes = (app) => {
   app.post('/register', upload, authController().postRegister);
   // app.get("/preview", guest, authController().preview);
   app.post('/preview', authController().postPreview);
-  app.get('/success', guest, authController().success);
+  // app.get('/success', guest, authController().success);
   //----------deepali ends------------
   app.post('/logout', authController().logout);
 

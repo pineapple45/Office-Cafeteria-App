@@ -151,7 +151,7 @@ const authController = () => {
           password = '';
           confirmpassword = '';
           image = '';
-          return res.redirect('/success');
+          return res.render('auth/success', { id });
         })
         .catch((err) => {
           req.flash('error', 'Something went wrong');
@@ -159,9 +159,9 @@ const authController = () => {
         });
     },
 
-    success: (req, res) => {
-      return res.render('auth/success', { id });
-    },
+    // success: (req, res) => {
+    //   return res.render('auth/success', { id });
+    // },
 
     logout(req, res) {
       employee_id = '';
